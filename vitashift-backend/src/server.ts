@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import { app } from './app.js';
 import { env } from './config/env.js';
 import { logger } from './utils/logger.js';
+import { startInprocessSimulationWorker } from './services/simulationWorker.js';
 
 async function connectMongo() {
   if (env.useMemoryDb) {
@@ -20,6 +21,10 @@ async function connectMongo() {
 async function start() {
   try {
     await connectMongo();
+    if (env.useInprocessWorker) {
+      startInprocessSimulationWorker();
+      logger.info('In-process simulation worker started');
+    }
     app.listen(env.port, () => {
       logger.info(`Server listening on port ${env.port}`);
     });

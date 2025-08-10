@@ -6,6 +6,7 @@ import timelinesRouter from './timelines.routes.js';
 import parallelLifeRouter from './parallel-life.routes.js';
 import aiRouter from './ai.routes.js';
 import paymentsRouter from './payments.routes.js';
+import storageRouter from './storage.routes.js';
 
 const api = Router();
 
@@ -16,5 +17,6 @@ api.use('/timelines', timelinesRouter);
 api.use('/parallel-life', parallelLifeRouter);
 api.use('/ai', aiRouter);
 api.use('/payments', paymentsRouter);
+api.use('/storage', storageRouter);
 
 export default api;
