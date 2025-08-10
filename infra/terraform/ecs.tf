@@ -23,14 +23,15 @@ resource "aws_lb" "api" {
   name               = "${var.project}-${var.environment}-alb"
   internal           = false
   load_balancer_type = "application"
-  subnets            = []
+  subnets            = [aws_subnet.public_a.id, aws_subnet.public_b.id]
+  security_groups    = [aws_security_group.api.id]
 }
 
 resource "aws_lb_target_group" "api" {
   name     = "${var.project}-${var.environment}-tg"
   port     = 4000
   protocol = "HTTP"
-  vpc_id   = ""
+  vpc_id   = aws_vpc.main.id
   target_type = "ip"
   health_check {
     path = "/health"
@@ -77,9 +78,9 @@ resource "aws_ecs_service" "api" {
   launch_type     = "FARGATE"
   desired_count   = 1
   network_configuration {
-    subnets         = []
+    subnets          = [aws_subnet.public_a.id, aws_subnet.public_b.id]
     assign_public_ip = true
-    security_groups = []
+    security_groups  = [aws_security_group.api.id]
   }
   load_balancer {
     target_group_arn = aws_lb_target_group.api.arn
