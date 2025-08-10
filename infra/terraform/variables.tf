@@ -1,0 +1,9 @@
+variable "aws_region" { type = string default = "us-east-1" }
+variable "project" { type = string default = "vitashift" }
+variable "environment" { type = string default = "dev" }
+variable "domain_name" { type = string default = "" }
+variable "s3_bucket_name" { type = string default = "" }
+variable "container_image" { type = string default = "" }
+variable "jwt_secret" { type = string default = "" }
+variable "jwt_refresh_secret" { type = string default = "" }
+variable "mongo_uri" { type = string default = "" }
